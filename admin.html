@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Ramadan Challenge Results</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #d63031 0%, #e17055 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .admin-notice {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            color: #856404;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #d63031 0%, #e17055 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(214, 48, 49, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        .leaderboard {
+            margin-bottom: 40px;
+        }
+
+        .leaderboard h2 {
+            color: #d63031;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .leaderboard-table table {
+            width: 100%;
+            min-width: 900px;
+        }
+
+        .leaderboard-table th {
+            background: linear-gradient(135deg, #d63031 0%, #e17055 100%);
+            color: white;
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .leaderboard-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .leaderboard-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            min-width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .rank-1 {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #856404;
+        }
+
+        .rank-2 {
+            background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+            color: #333;
+        }
+
+        .rank-3 {
+            background: linear-gradient(135deg, #cd7f32 0%, #e8a87c 100%);
+            color: #fff;
+        }
+
+        .rank-other {
+            background: #f8f9fa;
+            color: #666;
+        }
+
+        .score-good {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .score-medium {
+            color: #ffc107;
+            font-weight: 600;
+        }
+
+        .score-low {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        .student-badge {
+            background: #e8f4f8;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #0984e3;
+            display: inline-block;
+            margin: 2px;
+        }
+
+        .detailed-answers {
+            margin-top: 40px;
+        }
+
+        .detailed-answers h2 {
+            color: #d63031;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .player-detail {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #d63031;
+        }
+
+        .player-detail h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .player-info-section {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .info-item {
+            padding: 8px;
+        }
+
+        .info-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #2d3436;
+        }
+
+        .answer-row {
+            background: white;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            display: grid;
+            grid-template-columns: 50px 1fr 100px;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .answer-correct {
+            border-left: 4px solid #28a745;
+        }
+
+        .answer-incorrect {
+            border-left: 4px solid #dc3545;
+        }
+
+        .question-num {
+            font-weight: 700;
+            color: #666;
+        }
+
+        .answer-status {
+            text-align: right;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .checkmark {
+            color: #28a745;
+            font-size: 1.2em;
+        }
+
+        .xmark {
+            color: #dc3545;
+            font-size: 1.2em;
+        }
+
+        .export-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f4f8;
+            border-radius: 8px;
+        }
+
+        .export-section h3 {
+            color: #0984e3;
+            margin-bottom: 15px;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-data h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .filter-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .filter-section h3 {
+            margin-bottom: 15px;
+            color: #2d3436;
+        }
+
+        .filter-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .filter-controls select {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+
+            .leaderboard-table {
+                font-size: 0.85em;
+            }
+
+            .answer-row {
+                grid-template-columns: 40px 1fr 80px;
+                font-size: 0.9em;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Admin Dashboard</h1>
+            <p>Ramadan Challenge Results & Analytics</p>
+        </div>
+
+        <div class="admin-notice">
+            ⚠️ ADMINISTRATOR ACCESS ONLY - Keep this page private
+        </div>
+
+        <div class="content">
+            <div class="controls">
+                <button class="btn" onclick="loadResults()">🔄 Refresh Results</button>
+                <button class="btn btn-secondary" onclick="exportToCSV()">📊 Export to CSV</button>
+                <button class="btn btn-danger" onclick="clearAllResults()">🗑️ Clear All Results</button>
+            </div>
+
+            <!-- Filters -->
+            <div class="filter-section">
+                <h3>📋 Filter Results</h3>
+                <div class="filter-controls">
+                    <select id="gradeFilter" onchange="applyFilters()">
+                        <option value="">All Grades</option>
+                        <option value="6">Grade 6</option>
+                        <option value="7">Grade 7</option>
+                        <option value="8">Grade 8</option>
+                        <option value="9">Grade 9</option>
+                        <option value="10">Grade 10</option>
+                        <option value="11">Grade 11</option>
+                        <option value="12">Grade 12</option>
+                    </select>
+                    <select id="sectionFilter" onchange="applyFilters()">
+                        <option value="">All Sections</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <h3 id="totalParticipants">0</h3>
+                    <p>Total Participants</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="avgScore">0%</h3>
+                    <p>Average Score</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="avgTime">0s</h3>
+                    <p>Average Time</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="highestScore">0</h3>
+                    <p>Highest Score</p>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <h3 id="duplicateAttempts">0</h3>
+                    <p>Duplicate Attempts Blocked</p>
+                </div>
+            </div>
+
+            <div class="leaderboard">
+                <h2>🏆 Complete Rankings</h2>
+                <div class="leaderboard-table" id="leaderboardContent">
+                    <div class="no-data">
+                        <h3>No results yet</h3>
+                        <p>Results will appear here once students complete the challenge</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detailed-answers">
+                <h2>📝 Detailed Student Reports</h2>
+                <div id="detailedContent">
+                    <div class="no-data">
+                        <p>Select "Refresh Results" to load detailed answers</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="export-section">
+                <h3>📥 Export Options</h3>
+                <p>Click "Export to CSV" to download all results as a spreadsheet file that can be opened in Excel or Google Sheets. The export includes all student information, scores, and detailed answer breakdown.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // GOOGLE SHEETS CONFIGURATION
+        const GOOGLE_SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbys3JYikjyQ9moWRgsnu046FXlNrvQHXlCBTpZ3QO3dPJuJ84aVtKXaX59ZOIZ6o1i3/exec';
+        
+        const totalQuestions = 10;
+        let allScores = [];
+        let filteredScores = [];
+
+        async function loadResults() {
+            try {
+                const response = await fetch(GOOGLE_SHEETS_API_URL);
+                const result = await response.json();
+                
+                if (!result.success || !result.data || result.data.length === 0) {
+                    showNoData();
+                    return;
+                }
+
+                const scores = result.data;
+                const emailMap = new Map();
+                let duplicateCount = 0;
+
+                // Track duplicate emails
+                scores.forEach(playerData => {
+                    const email = playerData.email.toLowerCase();
+                    if (emailMap.has(email)) {
+                        duplicateCount++;
+                    } else {
+                        emailMap.set(email, true);
+                    }
+                });
+
+                // Sort by score (desc) then time (asc)
+                scores.sort((a, b) => {
+                    if (b.score !== a.score) {
+                        return b.score - a.score;
+                    }
+                    return a.time - b.time;
+                });
+
+                allScores = scores;
+                filteredScores = scores;
+
+                // Update duplicate count
+                document.getElementById('duplicateAttempts').textContent = duplicateCount;
+
+                populateFilters();
+                updateStats(filteredScores);
+                displayLeaderboard(filteredScores);
+                displayDetailedAnswers(filteredScores);
+
+            } catch (error) {
+                console.error('Error loading results:', error);
+                alert('Error loading results. Please try again.');
+            }
+        }
+
+        function populateFilters() {
+            const sections = [...new Set(allScores.map(s => s.section))].sort();
+            const sectionFilter = document.getElementById('sectionFilter');
+            sectionFilter.innerHTML = '<option value="">All Sections</option>';
+            sections.forEach(section => {
+                const option = document.createElement('option');
+                option.value = section;
+                option.textContent = `Section ${section}`;
+                sectionFilter.appendChild(option);
+            });
+        }
+
+        function applyFilters() {
+            const gradeFilter = document.getElementById('gradeFilter').value;
+            const sectionFilter = document.getElementById('sectionFilter').value;
+
+            filteredScores = allScores.filter(score => {
+                const gradeMatch = !gradeFilter || score.grade === gradeFilter;
+                const sectionMatch = !sectionFilter || score.section === sectionFilter;
+                return gradeMatch && sectionMatch;
+            });
+
+            updateStats(filteredScores);
+            displayLeaderboard(filteredScores);
+            displayDetailedAnswers(filteredScores);
+        }
+
+        function showNoData() {
+            document.getElementById('totalParticipants').textContent = '0';
+            document.getElementById('avgScore').textContent = '0%';
+            document.getElementById('avgTime').textContent = '0s';
+            document.getElementById('highestScore').textContent = '0';
+            document.getElementById('duplicateAttempts').textContent = '0';
+            
+            document.getElementById('leaderboardContent').innerHTML = `
+                <div class="no-data">
+                    <h3>No results yet</h3>
+                    <p>Results will appear here once students complete the challenge</p>
+                </div>
+            `;
+            
+            document.getElementById('detailedContent').innerHTML = `
+                <div class="no-data">
+                    <p>No data available</p>
+                </div>
+            `;
+        }
+
+        function updateStats(scores) {
+            if (scores.length === 0) {
+                showNoData();
+                return;
+            }
+
+            const totalParticipants = scores.length;
+            const avgScore = Math.round(scores.reduce((sum, s) => sum + s.percentage, 0) / totalParticipants);
+            const avgTime = (scores.reduce((sum, s) => sum + s.time, 0) / totalParticipants).toFixed(1);
+            const highestScore = scores[0].score;
+
+            document.getElementById('totalParticipants').textContent = totalParticipants;
+            document.getElementById('avgScore').textContent = avgScore + '%';
+            document.getElementById('avgTime').textContent = avgTime + 's';
+            document.getElementById('highestScore').textContent = highestScore + '/' + totalQuestions;
+        }
+
+        function displayLeaderboard(scores) {
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Student Info</th>
+                            <th>Email</th>
+                            <th>Score</th>
+                            <th>Accuracy</th>
+                            <th>Time</th>
+                            <th>Avg Time/Q</th>
+                            <th>Completed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            scores.forEach((player, index) => {
+                const rank = index + 1;
+                const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : 'rank-other';
+                const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
+                const scoreClass = player.percentage >= 80 ? 'score-good' : player.percentage >= 60 ? 'score-medium' : 'score-low';
+                const playerTotalQ = player.totalQuestions || totalQuestions;
+                const avgTimePerQ = (player.time / playerTotalQ).toFixed(1);
+                const completedDate = new Date(player.timestamp).toLocaleString();
+
+                html += `
+                    <tr>
+                        <td><span class="rank-badge ${rankClass}">${medal || rank}</span></td>
+                        <td><strong>${player.name}</strong></td>
+                        <td>
+                            <span class="student-badge">ID: ${player.studentId}</span><br>
+                            <span class="student-badge">Grade ${player.grade}</span>
+                            <span class="student-badge">Section ${player.section}</span>
+                        </td>
+                        <td style="font-size: 0.85em;">${player.email}</td>
+                        <td class="${scoreClass}"><strong>${player.score}/${playerTotalQ}</strong></td>
+                        <td class="${scoreClass}">${player.percentage}%</td>
+                        <td>${player.time.toFixed(1)}s</td>
+                        <td>${avgTimePerQ}s</td>
+                        <td style="font-size: 0.8em; color: #666;">${completedDate}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('leaderboardContent').innerHTML = html;
+        }
+
+        function displayDetailedAnswers(scores) {
+            let html = '';
+
+            scores.forEach((player, index) => {
+                const rank = index + 1;
+                const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`;
+                
+                html += `
+                    <div class="player-detail">
+                        <h3>${medal} ${player.name}</h3>
+                        <div class="player-info-section">
+                            <div class="info-item">
+                                <div class="info-label">Student ID</div>
+                                <div class="info-value">${player.studentId}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Email</div>
+                                <div class="info-value">${player.email}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Grade</div>
+                                <div class="info-value">Grade ${player.grade}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Section</div>
+                                <div class="info-value">Section ${player.section}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Score</div>
+                                <div class="info-value">${player.score}/${totalQuestions} (${player.percentage}%)</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Total Time</div>
+                                <div class="info-value">${player.time.toFixed(1)}s</div>
+                            </div>
+                        </div>
+                `;
+
+                if (player.answers && player.answers.length > 0) {
+                    player.answers.forEach(answer => {
+                        const isCorrect = answer.isCorrect;
+                        const icon = isCorrect ? '<span class="checkmark">✓</span>' : '<span class="xmark">✗</span>';
+                        const rowClass = isCorrect ? 'answer-correct' : 'answer-incorrect';
+                        
+                        html += `
+                            <div class="answer-row ${rowClass}">
+                                <div class="question-num">Q${answer.question}</div>
+                                <div>
+                                    <div><strong>Selected:</strong> ${answer.selectedAnswer}</div>
+                                    ${!isCorrect ? `<div style="color: #28a745; margin-top: 5px;"><strong>Correct:</strong> ${answer.correctAnswer}</div>` : ''}
+                                </div>
+                                <div class="answer-status">
+                                    ${icon} ${answer.timeSpent.toFixed(1)}s
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html += '<p style="color: #666; font-style: italic;">Detailed answers not available</p>';
+                }
+
+                html += '</div>';
+            });
+
+            document.getElementById('detailedContent').innerHTML = html || '<div class="no-data"><p>No detailed data available</p></div>';
+        }
+
+        function exportToCSV() {
+            window.storage.list('player_', true).then(keys => {
+                if (!keys || !keys.keys || keys.keys.length === 0) {
+                    alert('No results to export');
+                    return;
+                }
+
+                const promises = keys.keys.map(key => window.storage.get(key, true));
+                
+                Promise.all(promises).then(results => {
+                    const scores = results
+                        .filter(r => r && r.value)
+                        .map(r => JSON.parse(r.value))
+                        .sort((a, b) => {
+                            if (b.score !== a.score) return b.score - a.score;
+                            return a.time - b.time;
+                        });
+
+                    let csv = 'Rank,Name,Student ID,Email,Grade,Section,Score,Total Questions,Percentage,Total Time (s),Average Time per Question (s),Completed At\n';
+                    
+                    scores.forEach((player, index) => {
+                        const rank = index + 1;
+                        const avgTime = (player.time / totalQuestions).toFixed(2);
+                        const completedDate = new Date(player.timestamp).toLocaleString();
+                        
+                        csv += `${rank},"${player.name}","${player.studentId}","${player.email}",${player.grade},"${player.section}",${player.score},${totalQuestions},${player.percentage},${player.time.toFixed(2)},${avgTime},"${completedDate}"\n`;
+                    });
+
+                    // Add detailed answers section
+                    csv += '\n\nDetailed Answers by Student\n';
+                    csv += 'Student Name,Student ID,Grade,Section,Question Number,Selected Answer,Correct Answer,Is Correct,Time Spent (s)\n';
+                    
+                    scores.forEach(player => {
+                        if (player.answers && player.answers.length > 0) {
+                            player.answers.forEach(answer => {
+                                csv += `"${player.name}","${player.studentId}",${player.grade},"${player.section}",${answer.question},"${answer.selectedAnswer}","${answer.correctAnswer}",${answer.isCorrect ? 'Yes' : 'No'},${answer.timeSpent.toFixed(2)}\n`;
+                            });
+                        }
+                    });
+
+                    const blob = new Blob([csv], { type: 'text/csv' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `ramadan_challenge_results_${new Date().toISOString().split('T')[0]}.csv`;
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                });
+            });
+        }
+
+        async function clearAllResults() {
+            if (!confirm('⚠️ WARNING: This will permanently delete ALL results. This cannot be undone. Are you sure?')) {
+                return;
+            }
+
+            if (!confirm('This is your final warning. ALL student results will be lost forever. Continue?')) {
+                return;
+            }
+
+            try {
+                const keys = await window.storage.list('player_', true);
+                
+                if (!keys || !keys.keys || keys.keys.length === 0) {
+                    alert('No results to clear');
+                    return;
+                }
+
+                for (const key of keys.keys) {
+                    await window.storage.delete(key, true);
+                }
+
+                alert('All results have been cleared');
+                allScores = [];
+                filteredScores = [];
+                showNoData();
+            } catch (error) {
+                console.error('Error clearing results:', error);
+                alert('Error clearing results. Please try again.');
+            }
+        }
+
+        // Auto-load results on page load
+        window.addEventListener('load', loadResults);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ramadan Knowledge Challenge 🌙</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0.3; }
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
+            50% { box-shadow: 0 0 35px rgba(255, 215, 0, 0.9), 0 0 55px rgba(255, 215, 0, 0.7); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes prizeRotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            color: #333;
+            position: relative;
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            color: #ffd700;
+            animation: starTwinkle 2s ease-in-out infinite;
+        }
+
+        .moon {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            font-size: 50px;
+            animation: float 6s ease-in-out infinite;
+            z-index: 1;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.5));
+        }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            display: none;
+        }
+
+        .confetti-container.active {
+            display: block;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HOMEPAGE STYLES */
+        .homepage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.8s ease-out;
+            padding: 20px;
+        }
+
+        .homepage.hidden {
+            display: none;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 40px 20px 30px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+            border-radius: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero-icon {
+            font-size: 80px;
+            animation: bounce 2s ease-in-out infinite;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .hero-title {
+            font-size: 2.2em;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1em;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .prize-section {
+            background: white;
+            border-radius: 25px;
+            padding: 30px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        .prize-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .prize-title {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 8px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .prize-subtitle {
+            font-size: 1em;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .prizes-grid {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .prize-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            border: 3px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prize-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .prize-card.first {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe9a3 100%);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .prize-card.second {
+            border-color: #c0c0c0;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+
+        .prize-card.third {
+            border-color: #cd7f32;
+            background: linear-gradient(135deg, #ffe9d5 0%, #ffd4a3 100%);
+        }
+
+        .prize-medal {
+            font-size: 50px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: prizeRotate 3s linear infinite;
+        }
+
+        .prize-place {
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .first .prize-place { color: #d4af37; }
+        .second .prize-place { color: #8c8c8c; }
+        .third .prize-place { color: #cd7f32; }
+
+        .prize-description {
+            font-size: 1em;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+            border: 3px solid #ffc107;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            animation: fadeIn 1.2s ease-out 0.4s both;
+        }
+
+        .info-box-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-box-content {
+            color: #856404;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .info-box ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .info-box li {
+            margin: 8px 0;
+        }
+
+        .ready-section {
+            text-align: center;
+            animation: fadeIn 1.4s ease-out 0.6s both;
+        }
+
+        .ready-question {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 22px 50px;
+            font-size: 1.4em;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.4);
+            transition: all 0.3s;
+            animation: pulse 2s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:active {
+            transform: scale(0.95);
+        }
+
+        /* REGISTRATION SCREEN */
+        .registration-screen {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .registration-screen.active {
+            display: block;
+        }
+
+        .reg-header {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+            color: white;
+            padding: 30px 25px;
+            text-align: center;
+            border-radius: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .reg-header h2 {
+            font-size: 1.8em;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .reg-header p {
+            font-size: 1em;
+            opacity: 0.95;
+        }
+
+        .reg-form {
+            background: white;
+            border-radius: 25px;
+            padding: 30px 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 1em;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 16px;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2em;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .submit-button:active {
+            transform: scale(0.98);
+        }
+
+        .back-button {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        /* QUESTION SCREEN */
+        .question-screen {
+            display: none;
+            padding: 20px;
+        }
+
+        .question-screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .game-header {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .game-header h1 {
+            font-size: 1.8em;
+            font-weight: 800;
+        }
+
+        .game-content {
+            background: white;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .timer {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 18px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 700;
+            animation: pulse 1s ease-in-out infinite;
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.3);
+        }
+
+        .question-number {
+            color: #764ba2;
+            font-size: 1em;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            margin-bottom: 25px;
+            color: #333;
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .answers {
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            background: white;
+            border: 3px solid #e0e0e0;
+            padding: 18px;
+            text-align: left;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .answer-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .answer-btn:active::before {
+            left: 100%;
+        }
+
+        .answer-btn:active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            transform: scale(0.98);
+        }
+
+        .answer-btn.correct {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-color: #28a745;
+            animation: celebrate 0.6s ease-out;
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+        }
+
+        .answer-btn.correct::after {
+            content: '✓';
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 28px;
+            color: #28a745;
+            animation: bounce 0.5s ease-out;
+        }
+
+        .answer-btn.incorrect {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border-color: #dc3545;
+            animation: shake 0.5s ease-out;
+            box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3);
+        }
+
+        .answer-btn.incorrect::after {
+            content: '✗';
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 28px;
+            color: #dc3545;
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .explanation {
+            background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f7 100%);
+            padding: 18px;
+            border-radius: 18px;
+            margin-top: 18px;
+            border-left: 5px solid #667eea;
+            animation: fadeIn 0.5s ease-out;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 35px;
+            font-size: 1.1em;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* RESULTS SCREEN */
+        .results-screen {
+            display: none;
+            padding: 20px;
+        }
+
+        .results-screen.active {
+            display: block;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .completion-message {
+            text-align: center;
+            padding: 35px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 25px;
+            margin-bottom: 25px;
+            animation: celebrate 0.8s ease-out;
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.4);
+        }
+
+        .success-icon {
+            font-size: 70px;
+            animation: celebrate 1s ease-out;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .completion-message h2 {
+            font-size: 2em;
+            margin-bottom: 12px;
+            animation: bounce 1s ease-in-out;
+        }
+
+        .completion-message p {
+            font-size: 1.1em;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 35px;
+            border-radius: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+            animation: celebrate 0.8s ease-out;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .score-display h2 {
+            font-size: 2.5em;
+            margin-bottom: 12px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .score-display p {
+            font-size: 1em;
+            opacity: 0.95;
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2em;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            width: 100%;
+        }
+
+        .sound-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 22px;
+            z-index: 1000;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+        }
+
+        .sound-toggle:active {
+            transform: scale(0.95);
+        }
+
+        /* LEADERBOARD SECTION */
+        .leaderboard-section {
+            margin-top: 30px;
+            background: white;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .leaderboard-title {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .student-leaderboard {
+            max-width: 100%;
+        }
+
+        .leaderboard-item {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .leaderboard-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .leaderboard-item.rank-1 {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe9a3 100%);
+            border-color: #ffd700;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .leaderboard-item.rank-2 {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            border-color: #c0c0c0;
+            box-shadow: 0 8px 25px rgba(192, 192, 192, 0.3);
+        }
+
+        .leaderboard-item.rank-3 {
+            background: linear-gradient(135deg, #ffe9d5 0%, #ffd4a3 100%);
+            border-color: #cd7f32;
+            box-shadow: 0 8px 25px rgba(205, 127, 50, 0.3);
+        }
+
+        .leaderboard-item.current-user {
+            border: 3px solid #667eea;
+            background: linear-gradient(135deg, #e8ecff 0%, #d4dcff 100%);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .rank-badge {
+            min-width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            font-weight: 800;
+            background: white;
+            color: #667eea;
+        }
+
+        .leaderboard-item.rank-1 .rank-badge {
+            background: #ffd700;
+            color: #856404;
+        }
+
+        .leaderboard-item.rank-2 .rank-badge {
+            background: #c0c0c0;
+            color: #333;
+        }
+
+        .leaderboard-item.rank-3 .rank-badge {
+            background: #cd7f32;
+            color: white;
+        }
+
+        .leaderboard-info {
+            flex: 1;
+        }
+
+        .leaderboard-name {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #2d3436;
+            margin-bottom: 3px;
+        }
+
+        .leaderboard-stats {
+            font-size: 0.9em;
+            color: #636e72;
+        }
+
+        .leaderboard-score {
+            font-size: 1.4em;
+            font-weight: 800;
+            color: #667eea;
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .leaderboard-item.rank-1 .leaderboard-score {
+            color: #f39c12;
+        }
+
+        .leaderboard-item.rank-2 .leaderboard-score {
+            color: #7f8c8d;
+        }
+
+        .leaderboard-item.rank-3 .leaderboard-score {
+            color: #d35400;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #95a5a6;
+            font-size: 1.1em;
+        }
+
+        .you-badge {
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8em;
+            }
+
+            .prize-title {
+                font-size: 1.5em;
+            }
+
+            .ready-question {
+                font-size: 1.5em;
+            }
+
+            .cta-button {
+                font-size: 1.2em;
+                padding: 20px 40px;
+            }
+
+            .moon {
+                font-size: 35px;
+                top: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="stars-bg" id="starsBg"></div>
+    <div class="moon">🌙</div>
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- Sound Toggle -->
+    <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+
+    <div class="container">
+        <!-- HOMEPAGE -->
+        <div class="homepage" id="homepage">
+            <div class="hero-section">
+                <div class="hero-icon">🌙</div>
+                <h1 class="hero-title">Ramadan Knowledge Challenge</h1>
+                <p class="hero-subtitle">Test your knowledge and win amazing prizes!</p>
+            </div>
+
+            <div class="prize-section">
+                <div class="prize-header">
+                    <h2 class="prize-title">🏆 EXCITING PRIZES! 🏆</h2>
+                    <p class="prize-subtitle">Top 3 Winners Will Receive:</p>
+                </div>
+
+                <div class="prizes-grid">
+                    <div class="prize-card first">
+                        <div class="prize-medal">🥇</div>
+                        <div class="prize-place">1st Place</div>
+                        <div class="prize-description">Amazing Prize!</div>
+                    </div>
+
+                    <div class="prize-card second">
+                        <div class="prize-medal">🥈</div>
+                        <div class="prize-place">2nd Place</div>
+                        <div class="prize-description">Great Prize!</div>
+                    </div>
+
+                    <div class="prize-card third">
+                        <div class="prize-medal">🥉</div>
+                        <div class="prize-place">3rd Place</div>
+                        <div class="prize-description">Awesome Prize!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-box-title">
+                    <span>⚡</span>
+                    <span>How It Works</span>
+                </div>
+                <div class="info-box-content">
+                    <ul>
+                        <li><strong>10 challenging questions</strong> about Ramadan</li>
+                        <li>Winners determined by <strong>correct answers</strong> and <strong>speed</strong></li>
+                        <li>Each second counts - answer quickly and accurately!</li>
+                        <li>Read explanations after each question to learn</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="ready-section">
+                <h2 class="ready-question">Are You Ready? 💪</h2>
+                <button class="cta-button" onclick="showRegistration()">
+                    LET'S GO! 🚀
+                </button>
+            </div>
+        </div>
+
+        <!-- REGISTRATION SCREEN -->
+        <div class="registration-screen" id="registrationScreen">
+            <div class="reg-header">
+                <h2>🏆 Help Us Find The Winner!</h2>
+                <p>Enter your info to compete for amazing prizes!</p>
+            </div>
+
+            <div class="reg-form">
+                <div class="form-group">
+                    <label for="studentName">Full Name *</label>
+                    <input type="text" id="studentName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentId">Student ID *</label>
+                    <input type="text" id="studentId" placeholder="Enter your student ID" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentEmail">Email *</label>
+                    <input type="email" id="studentEmail" placeholder="your.email@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentGrade">Grade *</label>
+                    <select id="studentGrade" required>
+                        <option value="">Select your grade</option>
+                        <option value="6">Grade 6</option>
+                        <option value="7">Grade 7</option>
+                        <option value="8">Grade 8</option>
+                        <option value="9">Grade 9</option>
+                        <option value="10">Grade 10</option>
+                        <option value="11">Grade 11</option>
+                        <option value="12">Grade 12</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentSection">Section *</label>
+                    <input type="text" id="studentSection" placeholder="e.g., A, B, C" required maxlength="3">
+                </div>
+
+                <button type="button" class="submit-button" onclick="console.log('BUTTON CLICKED!'); startGame();">Start Challenge 🎯</button>
+                <button type="button" class="back-button" onclick="showHomepage()">← Back</button>
+            </div>
+        </div>
+
+        <!-- QUESTION SCREEN -->
+        <div class="question-screen" id="questionScreen">
+            <div class="game-header">
+                <h1>🌙 Ramadan Challenge 🌙</h1>
+            </div>
+
+            <div class="game-content">
+                <div class="timer" id="timer">⏱️ Time: 0s</div>
+                <div class="question-number" id="questionNumber"></div>
+                <div class="question-text" id="questionText"></div>
+                <div class="answers" id="answers"></div>
+                <div class="explanation" id="explanation" style="display: none;">
+                    <div class="explanation-title">💡 Explanation:</div>
+                    <div id="explanationText"></div>
+                </div>
+                <button class="next-btn" id="nextBtn" style="display: none;" onclick="nextQuestion()">Next Question ➡️</button>
+            </div>
+        </div>
+
+        <!-- RESULTS SCREEN -->
+        <div class="results-screen" id="resultsScreen">
+            <div class="completion-message">
+                <div class="success-icon">🎉</div>
+                <h2>Challenge Complete!</h2>
+                <p>Your results have been submitted</p>
+            </div>
+
+            <div class="score-display">
+                <h2 id="finalScore"></h2>
+                <p id="scoreDetails"></p>
+            </div>
+
+            <div class="leaderboard-section">
+                <h2 class="leaderboard-title">🏆 Current Leaderboard - Top 10</h2>
+                <div id="studentLeaderboard" class="student-leaderboard">
+                    <div class="loading">Loading leaderboard...</div>
+                </div>
+            </div>
+
+            <button class="reset-btn" onclick="resetGame()">🔄 Take Challenge Again</button>
+        </div>
+    </div>
+
+    <script>
+        // TEST - verify JavaScript is working
+        console.log('🚀 JavaScript loaded successfully!');
+        
+        const questions = [
+            {
+                question: "Which of the following is NOT one of the categories of people exempt from fasting according to Islamic jurisprudence?",
+                answers: [
+                    "A person on a long journey (musafir)",
+                    "A pregnant woman who fears for her health or her baby's health",
+                    "An elderly person who is physically capable of fasting but finds it very difficult",
+                    "A person with a chronic illness that makes fasting dangerous"
+                ],
+                correct: 2,
+                explanation: "An elderly person who is physically capable of fasting must fast, even if it's difficult. Only those who are unable to fast due to old age (where fasting would cause harm) are exempt and must feed a poor person for each day instead. The other categories have clear exemptions in Islamic law."
+            },
+            {
+                question: "According to the majority of scholars, if a traveler begins fasting while traveling and then decides mid-day to break the fast, what is the ruling?",
+                answers: [
+                    "It is permissible without any consequences",
+                    "It is permissible but makrūh (disliked)",
+                    "It is haram and requires kaffarah",
+                    "The fast must be completed and cannot be broken"
+                ],
+                correct: 0,
+                explanation: "According to the majority view (Shafi'i, Maliki, and Hanbali schools), a traveler who begins fasting has the option to complete or break the fast, as the concession of not fasting remains throughout the day for travelers. The Hanafi school holds a different view that once started, it should be completed."
+            },
+            {
+                question: "In Hanafi fiqh, what is the minimum distance (masāfat al-qasr) required for a journey to permit breaking the fast?",
+                answers: [
+                    "48 miles (approximately 77 km)",
+                    "55 miles (approximately 88 km)",
+                    "Two days' journey on foot or one day by camel",
+                    "Any distance where one crosses city limits with intention to travel"
+                ],
+                correct: 0,
+                explanation: "In the Hanafi school, the minimum distance for a valid journey (masāfat al-qasr) that allows shortening prayers and breaking the fast is approximately 48 miles (77-78 km or about 3 marhalah). Other schools have different opinions, with some not specifying a fixed distance."
+            },
+            {
+                question: "What is the difference between the 'white days' (al-ayyām al-bīḍ) fasting and Ramadan fasting in terms of niyyah (intention)?",
+                answers: [
+                    "Both require intention before Fajr",
+                    "Intention can be made during the day for Ramadan but not for white days",
+                    "Ramadan requires specific intention each night, white days do not",
+                    "There is no difference in the intention requirement"
+                ],
+                correct: 2,
+                explanation: "For obligatory Ramadan fasts, the majority of scholars require a specific intention (niyyah) to be made each night before Fajr. For voluntary fasts like the white days (13th, 14th, 15th of lunar months), the intention can be made during the day before noon (according to some scholars), and one general intention for all three days may suffice according to some views."
+            },
+            {
+                question: "What is the minimum amount of Zakat al-Fitr that must be given per person according to the majority of scholars?",
+                answers: [
+                    "One sa' (approximately 2.5-3 kg) of the staple food of the land",
+                    "One sa' of dates or barley only",
+                    "The monetary equivalent of 2.5% of one's wealth",
+                    "Half a sa' for adults, quarter sa' for children"
+                ],
+                correct: 0,
+                explanation: "The majority of scholars state that Zakat al-Fitr is one sa' (a prophetic measurement equal to approximately 2.5-3 kg) of the staple food of the land (wheat, rice, dates, barley, etc.). It can be given in the form of food or its monetary equivalent. It must be given before Eid prayer."
+            },
+            {
+                question: "What is the ruling on using miswak (tooth stick) after Zuhr prayer while fasting according to the Hanbali school?",
+                answers: [
+                    "It is prohibited (haram)",
+                    "It is disliked (makrūh)",
+                    "It is permissible without any dislike",
+                    "It is recommended (mustahabb)"
+                ],
+                correct: 1,
+                explanation: "In the Hanbali madhab, using miswak after Zuhr while fasting is makrūh (disliked) based on the hadith about the smell of the fasting person's mouth being more beloved to Allah than the scent of musk. However, the majority of scholars (Hanafi, Maliki, Shafi'i) permit it throughout the day, and some even recommend it."
+            },
+            {
+                question: "According to authentic narrations, what was the Prophet's (ﷺ) practice regarding the number of rak'ahs in night prayer during Ramadan?",
+                answers: [
+                    "He prayed exactly 20 rak'ahs regularly",
+                    "He prayed 8 rak'ahs plus 3 witr",
+                    "He prayed 36 rak'ahs",
+                    "The number varied and was not fixed"
+                ],
+                correct: 1,
+                explanation: "According to the authentic hadith in Bukhari and Muslim from Aisha (may Allah be pleased with her), the Prophet never exceeded 11 rak'ahs in night prayer during Ramadan or otherwise (8 rak'ahs + 3 witr). However, during Umar's caliphate, 20 rak'ahs became the practice in congregation (known as Tarawih), which many scholars accepted as permissible."
+            },
+            {
+                question: "According to the hadith, what happens to the gates of Paradise and Hell during Ramadan?",
+                answers: [
+                    "The gates of Paradise are opened and the gates of Hell are closed",
+                    "Both gates remain unchanged but angels guard them more strictly",
+                    "The gates of Paradise are opened but Hell's gates remain as they are",
+                    "All gates are closed to test the believers' sincerity"
+                ],
+                correct: 0,
+                explanation: "The Prophet (ﷺ) said: 'When Ramadan enters, the gates of Paradise are opened, the gates of Hell are closed, and the devils are chained.' This is found in Sahih Bukhari and Muslim, indicating the special spiritual atmosphere of this blessed month."
+            },
+            {
+                question: "In which specific verse of Surah Al-Qadr does Allah describe Laylat al-Qadr as being 'better than a thousand months'?",
+                answers: [
+                    "Verse 1",
+                    "Verse 2",
+                    "Verse 3",
+                    "Verse 4"
+                ],
+                correct: 2,
+                explanation: "Verse 3 of Surah Al-Qadr states: 'Laylat al-Qadr is better than a thousand months.' This means that worship on this one night is better than worship for 1,000 months (approximately 83 years), making it the most blessed night of the year."
+            },
+            {
+                question: "What is the Islamic ruling on someone who forgets they are fasting and eats or drinks?",
+                answers: [
+                    "The fast is broken and must be made up",
+                    "The fast is broken and requires both making up the day and kaffarah",
+                    "The fast remains valid and they should continue fasting",
+                    "The fast is broken but no make-up is required"
+                ],
+                correct: 2,
+                explanation: "According to the majority of scholars, if someone forgets they are fasting and eats or drinks, their fast remains valid. The Prophet (ﷺ) said: 'Whoever forgets that he is fasting and eats or drinks should complete his fast, for Allah has fed him and given him drink.' (Bukhari and Muslim)"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let studentData = {};
+        let questionStartTime = 0;
+        let totalTime = 0;
+        let timerInterval = null;
+        let questionTimes = [];
+        let answers = [];
+        let soundEnabled = true;
+
+        // Create stars background
+        function createStars() {
+            const starsBg = document.getElementById('starsBg');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.textContent = '✨';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsBg.appendChild(star);
+            }
+        }
+
+        // Sound effects
+        function playSound(type) {
+            if (!soundEnabled) return;
+            
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                switch(type) {
+                    case 'correct':
+                        oscillator.frequency.value = 523.25;
+                        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.5);
+                        
+                        setTimeout(() => {
+                            const osc2 = audioContext.createOscillator();
+                            const gain2 = audioContext.createGain();
+                            osc2.connect(gain2);
+                            gain2.connect(audioContext.destination);
+                            osc2.frequency.value = 659.25;
+                            gain2.gain.setValueAtTime(0.3, audioContext.currentTime);
+                            gain2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                            osc2.start(audioContext.currentTime);
+                            osc2.stop(audioContext.currentTime + 0.5);
+                        }, 100);
+                        break;
+                        
+                    case 'incorrect':
+                        oscillator.frequency.value = 200;
+                        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.3);
+                        break;
+                        
+                    case 'complete':
+                        const notes = [523.25, 587.33, 659.25, 783.99];
+                        notes.forEach((freq, i) => {
+                            setTimeout(() => {
+                                const osc = audioContext.createOscillator();
+                                const gain = audioContext.createGain();
+                                osc.connect(gain);
+                                gain.connect(audioContext.destination);
+                                osc.frequency.value = freq;
+                                gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+                                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+                                osc.start(audioContext.currentTime);
+                                osc.stop(audioContext.currentTime + 0.4);
+                            }, i * 150);
+                        });
+                        break;
+                }
+            } catch (error) {
+                console.log('Sound not supported');
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundToggle').textContent = soundEnabled ? '🔊' : '🔇';
+        }
+
+        // Confetti animation
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            container.classList.add('active');
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#fd79a8'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                container.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                container.classList.remove('active');
+                container.innerHTML = '';
+            }, 4000);
+        }
+
+        function showRegistration() {
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('registrationScreen').classList.add('active');
+        }
+
+        function showHomepage() {
+            document.getElementById('registrationScreen').classList.remove('active');
+            document.getElementById('homepage').classList.remove('hidden');
+        }
+
+        function startGame() {
+            console.log('=== START GAME CALLED ===');
+            
+            // Validate all fields
+            const name = document.getElementById('studentName').value.trim();
+            const studentId = document.getElementById('studentId').value.trim();
+            const email = document.getElementById('studentEmail').value.trim();
+            const grade = document.getElementById('studentGrade').value;
+            const section = document.getElementById('studentSection').value.trim().toUpperCase();
+
+            console.log('Name:', name);
+            console.log('Student ID:', studentId);
+            console.log('Email:', email);
+            console.log('Grade:', grade);
+            console.log('Section:', section);
+
+            if (!name) {
+                console.log('FAILED: No name');
+                alert('Please enter your full name');
+                return;
+            }
+            console.log('Name check passed');
+            
+            if (!studentId) {
+                console.log('FAILED: No student ID');
+                alert('Please enter your student ID');
+                return;
+            }
+            console.log('Student ID check passed');
+            
+            if (!email) {
+                console.log('FAILED: No email');
+                alert('Please enter your email');
+                return;
+            }
+            console.log('Email check passed');
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                console.log('FAILED: Invalid email format');
+                alert('Please enter a valid email address');
+                return;
+            }
+            console.log('Email format check passed');
+            
+            if (!grade) {
+                console.log('FAILED: No grade selected');
+                alert('Please select your grade');
+                return;
+            }
+            console.log('Grade check passed');
+            
+            if (!section) {
+                console.log('FAILED: No section');
+                alert('Please enter your section');
+                return;
+            }
+            console.log('Section check passed');
+
+            console.log('>>> ALL VALIDATION PASSED! <<<');
+            console.log('Checking for duplicate email...');
+
+            // Check if email already exists
+            checkDuplicateEmail(email).then(isDuplicate => {
+                if (isDuplicate) {
+                    alert('This email has already been used to take the challenge. Only one attempt per student is allowed.');
+                    return;
+                }
+
+                console.log('No duplicate found, proceeding...');
+
+                studentData = {
+                    name: name,
+                    studentId: studentId,
+                    email: email,
+                    grade: grade,
+                    section: section
+                };
+
+                currentQuestion = 0;
+                score = 0;
+                totalTime = 0;
+                questionTimes = [];
+                answers = [];
+
+                console.log('About to hide registration screen...');
+                const regScreen = document.getElementById('registrationScreen');
+                console.log('Registration screen element:', regScreen);
+                regScreen.classList.remove('active');
+                console.log('Registration screen classes after remove:', regScreen.className);
+
+                console.log('About to show question screen...');
+                const qScreen = document.getElementById('questionScreen');
+                console.log('Question screen element:', qScreen);
+                qScreen.classList.add('active');
+                console.log('Question screen classes after add:', qScreen.className);
+                
+                console.log('Calling showQuestion()...');
+                showQuestion();
+                console.log('=== START GAME COMPLETE ===');
+            });
+        }
+
+        async function checkDuplicateEmail(email) {
+            try {
+                const response = await fetch(GOOGLE_SHEETS_API_URL);
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    for (const player of result.data) {
+                        if (player.email && player.email.toLowerCase() === email.toLowerCase()) {
+                            return true; // Duplicate found
+                        }
+                    }
+                }
+                
+                return false; // No duplicate
+            } catch (error) {
+                console.error('Error checking for duplicates:', error);
+                return false; // Allow in case of error
+            }
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('questionText').textContent = q.question;
+            
+            const answersDiv = document.getElementById('answers');
+            answersDiv.innerHTML = '';
+            
+            q.answers.forEach((answer, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.textContent = answer;
+                btn.onclick = () => selectAnswer(index);
+                answersDiv.appendChild(btn);
+            });
+
+            document.getElementById('explanation').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            questionStartTime = Date.now();
+            startTimer();
+        }
+
+        function startTimer() {
+            let seconds = 0;
+            timerInterval = setInterval(() => {
+                seconds++;
+                document.getElementById('timer').textContent = `⏱️ Time: ${seconds}s`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function selectAnswer(selectedIndex) {
+            stopTimer();
+            
+            const questionTime = (Date.now() - questionStartTime) / 1000;
+            questionTimes.push(questionTime);
+            totalTime += questionTime;
+
+            const q = questions[currentQuestion];
+            const buttons = document.querySelectorAll('.answer-btn');
+            
+            const isCorrect = selectedIndex === q.correct;
+            
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === q.correct) {
+                    btn.classList.add('correct');
+                }
+                if (index === selectedIndex && index !== q.correct) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            if (isCorrect) {
+                score++;
+                playSound('correct');
+                createConfetti();
+            } else {
+                playSound('incorrect');
+            }
+
+            answers.push({
+                question: currentQuestion + 1,
+                selectedAnswer: q.answers[selectedIndex],
+                correctAnswer: q.answers[q.correct],
+                isCorrect: isCorrect,
+                timeSpent: questionTime
+            });
+
+            document.getElementById('explanationText').textContent = q.explanation;
+            document.getElementById('explanation').style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        async function showResults() {
+            document.getElementById('questionScreen').classList.remove('active');
+            document.getElementById('resultsScreen').classList.add('active');
+
+            const percentage = Math.round((score / questions.length) * 100);
+            const avgTime = (totalTime / questions.length).toFixed(1);
+
+            document.getElementById('finalScore').textContent = `${score}/${questions.length} Correct`;
+            document.getElementById('scoreDetails').textContent = `${percentage}% accuracy • ${totalTime.toFixed(1)}s total time • ${avgTime}s average per question`;
+
+            playSound('complete');
+            createConfetti();
+            
+            await saveScore();
+            await displayStudentLeaderboard();
+        }
+
+        async function displayStudentLeaderboard() {
+            const leaderboardDiv = document.getElementById('studentLeaderboard');
+            
+            try {
+                const response = await fetch(GOOGLE_SHEETS_API_URL);
+                const result = await response.json();
+                
+                if (!result.success || !result.data || result.data.length === 0) {
+                    leaderboardDiv.innerHTML = '<div class="loading">No results yet. You\'re the first!</div>';
+                    return;
+                }
+
+                const scores = result.data;
+
+                // Sort by score (desc) then time (asc)
+                scores.sort((a, b) => {
+                    if (b.score !== a.score) {
+                        return b.score - a.score;
+                    }
+                    return a.time - b.time;
+                });
+
+                // Get top 10
+                const top10 = scores.slice(0, 10);
+                
+                let html = '';
+                top10.forEach((player, index) => {
+                    const rank = index + 1;
+                    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
+                    const isCurrentUser = player.email.toLowerCase() === studentData.email.toLowerCase();
+                    const rankClass = `rank-${rank <= 3 ? rank : 'other'}`;
+                    const currentUserClass = isCurrentUser ? 'current-user' : '';
+                    
+                    html += `
+                        <div class="leaderboard-item ${rankClass} ${currentUserClass}">
+                            <div class="rank-badge">${medal}</div>
+                            <div class="leaderboard-info">
+                                <div class="leaderboard-name">
+                                    ${player.name}
+                                    ${isCurrentUser ? '<span class="you-badge">YOU</span>' : ''}
+                                </div>
+                                <div class="leaderboard-stats">
+                                    Grade ${player.grade} • Section ${player.section} • ${player.time.toFixed(1)}s
+                                </div>
+                            </div>
+                            <div class="leaderboard-score">${player.score}/${player.totalQuestions}</div>
+                        </div>
+                    `;
+                });
+
+                leaderboardDiv.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading leaderboard:', error);
+                leaderboardDiv.innerHTML = '<div class="loading">Error loading leaderboard</div>';
+            }
+        }
+
+        // GOOGLE SHEETS CONFIGURATION
+        const GOOGLE_SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbys3JYikjyQ9moWRgsnu046FXlNrvQHXlCBTpZ3QO3dPJuJ84aVtKXaX59ZOIZ6o1i3/exec';
+
+        async function saveScore() {
+            try {
+                const scoreData = {
+                    name: studentData.name,
+                    studentId: studentData.studentId,
+                    email: studentData.email,
+                    grade: studentData.grade,
+                    section: studentData.section,
+                    score: score,
+                    totalQuestions: questions.length,
+                    percentage: Math.round((score / questions.length) * 100),
+                    time: totalTime,
+                    answers: answers
+                };
+
+                const response = await fetch(GOOGLE_SHEETS_API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(scoreData)
+                });
+
+                console.log('Score submitted to Google Sheets');
+            } catch (error) {
+                console.error('Error saving score:', error);
+                alert('There was an error submitting your results. Please contact the administrator.');
+            }
+        }
+
+        function resetGame() {
+            document.getElementById('resultsScreen').classList.remove('active');
+            document.getElementById('homepage').classList.remove('hidden');
+            
+            // Reset form
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentId').value = '';
+            document.getElementById('studentEmail').value = '';
+            document.getElementById('studentGrade').value = '';
+            document.getElementById('studentSection').value = '';
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            createStars();
+        });
+    </script>
+</body>
+</html>
