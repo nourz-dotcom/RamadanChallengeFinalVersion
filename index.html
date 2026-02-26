@@ -1064,8 +1064,6 @@
                     <div class="loading">Loading leaderboard...</div>
                 </div>
             </div>
-
-            <button class="reset-btn" onclick="resetGame()">🔄 Take Challenge Again</button>
         </div>
     </div>
 
@@ -1195,6 +1193,53 @@
         let questionTimes = [];
         let answers = [];
         let soundEnabled = true;
+
+        // PROGRESS SAVING
+        function saveProgress() {
+            const progress = {
+                currentQuestion,
+                score,
+                studentData,
+                totalTime,
+                questionTimes,
+                answers,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('ramadanQuizProgress', JSON.stringify(progress));
+        }
+
+        function loadProgress() {
+            try {
+                const saved = localStorage.getItem('ramadanQuizProgress');
+                if (!saved) return false;
+
+                const progress = JSON.parse(saved);
+                
+                // Check if progress is less than 24 hours old
+                const hoursSince = (Date.now() - progress.timestamp) / (1000 * 60 * 60);
+                if (hoursSince > 24) {
+                    localStorage.removeItem('ramadanQuizProgress');
+                    return false;
+                }
+
+                // Restore state
+                currentQuestion = progress.currentQuestion;
+                score = progress.score;
+                studentData = progress.studentData;
+                totalTime = progress.totalTime;
+                questionTimes = progress.questionTimes;
+                answers = progress.answers;
+
+                return true;
+            } catch (e) {
+                console.error('Error loading progress:', e);
+                return false;
+            }
+        }
+
+        function clearProgress() {
+            localStorage.removeItem('ramadanQuizProgress');
+        }
 
         // Create stars background
         function createStars() {
@@ -1507,6 +1552,8 @@
                 timeSpent: questionTime
             });
 
+            saveProgress(); // Save progress after answering
+
             document.getElementById('explanationText').textContent = q.explanation;
             document.getElementById('explanation').style.display = 'block';
             document.getElementById('nextBtn').style.display = 'block';
@@ -1516,13 +1563,16 @@
             currentQuestion++;
             
             if (currentQuestion < questions.length) {
+                saveProgress(); // Save progress after each question
                 showQuestion();
             } else {
+                clearProgress(); // Clear progress when quiz is complete
                 showResults();
             }
         }
 
         async function showResults() {
+            clearProgress(); // Make sure progress is cleared
             document.getElementById('questionScreen').classList.remove('active');
             document.getElementById('resultsScreen').classList.add('active');
 
@@ -1646,6 +1696,22 @@
         // Initialize
         window.addEventListener('load', () => {
             createStars();
+            
+            // Check for saved progress
+            if (loadProgress()) {
+                // Ask if they want to continue
+                if (confirm('You have an incomplete quiz. Would you like to continue where you left off?')) {
+                    // Hide homepage, show question screen
+                    document.getElementById('homepage').classList.add('hidden');
+                    document.getElementById('questionScreen').classList.add('active');
+                    
+                    // Show the current question
+                    showQuestion();
+                } else {
+                    // User wants to start fresh
+                    clearProgress();
+                }
+            }
         });
     </script>
 </body>
